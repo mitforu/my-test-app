@@ -2,11 +2,14 @@ import React from "react";
 import About from "./About";
 import Home from "./Home";
 import Users from "./Users";
+import Child from "./Child";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
+   BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useParams,
+    Redirect
 } from "react-router-dom";
 
 function App() {
@@ -15,9 +18,6 @@ function App() {
       <div>
         <nav>
           <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
             <li>
               <Link to="/about">About</Link>
             </li>
@@ -36,9 +36,19 @@ function App() {
           <Route path="/users">
             <Users />
           </Route>
-          <Route path="/">
-            <Home />
-          </Route>
+
+           <Route path="/test/:id"
+           render={({match, locations}) => {
+           const id = match.params.id;
+           console.log(id);
+           return <Redirect to={`/child/${id}`}/>;
+           }}
+           />
+
+
+           <Route path="/child/:id">
+            <Child/>
+           </Route>
         </Switch>
       </div>
     </Router>
